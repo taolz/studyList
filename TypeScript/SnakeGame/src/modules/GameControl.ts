@@ -25,7 +25,11 @@ class GameControl {
     }
 
     keydownHandler(event: KeyboardEvent) {
-        this.direction = event.key;
+        let trueKey = ['ArrowUp', 'Up', 'ArrowDown', 'Down', 'ArrowLeft', 'Left', 'ArrowRight', 'Right']
+        let downkey = event.key
+        if (trueKey.includes(downkey)) {
+            this.direction = event.key;
+        }
     }
 
     run() {
