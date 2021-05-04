@@ -96,22 +96,62 @@ Promise.prototype.then = function (onResolved, onRejected) {
   })
 }
 // catch 方法
-Promise.prototype.catch = function () {
-
+Promise.prototype.catch = function (onRejected) {
+  return this.then(undefined, onRejected)
 }
 // resolve 方法
-Promise.resolve = function () {
-
+Promise.resolve = function (value) {
+  // 返回Promise 对象
+  return new Promise((resolve, reject) => {
+    if (value instanceof Promise) {
+      value.then(v => {
+        resolve(v);
+      }, r => {
+        reject(r);
+      })
+    } else {
+      //状态设置为成功
+      resolve(value)
+    }
+  })
 }
 // reject 方法
-Promise.reject = function () {
-
+Promise.reject = function (reason) {
+  // 返回Promise 对象
+  return new Promise((resolve, reject) => {
+    reject(reason);
+  })
 }
 // all 方法
-Promise.all = function () {
+Promise.all = function (promises) {
+  return new Promise((resolve, reject) => {
+    let count = 0
+    let arr = []
+    // 遍历
+    for (let i = 0; i < promises.length; i++) {
+      promises[i].then(v => {
+        count++
+        arr[i] = v
+        if (count === promises.length) {
+          resolve(arr)
+        }
+      }, r => {
+        reject(r)
+      })
+    }
+  })
 
 }
 // race 方法
-Promise.race = function () {
-
+Promise.race = function (promises) {
+  return new Promise((resolve, reject) => {
+    // 遍历
+    for (let i = 0; i < promises.length; i++) {
+      promises[i].then(v => {
+        resolve(v)
+      }, r => {
+        reject(r)
+      })
+    }
+  })
 }
