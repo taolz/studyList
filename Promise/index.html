@@ -3,17 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>手写promise</title>
-    <!--    <script src="promise.js"></script>-->
+    <script src="promise.js"></script>
 </head>
 <body>
 <script>
-  let p = new Promise((resolve, reject) => {
-    resolve('ok')
-  })
-  let res = p.then(value => {
-    return 1
-  })
-  console.log(res)
+  let p1 = new Promise((resolve, reject) => {
+    reject('OK');
+    console.log(111);
+  });
+
+  p1.then(value => {
+    console.log(222);
+  }, reason => {
+    console.log(444);
+  });
+
+  console.log(333);
 </script>
 </body>
 </html>
